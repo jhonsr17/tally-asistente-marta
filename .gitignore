@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.env*
+!.env.example
+.mcp.json
+.claude/settings.local.json
+connection.json
+token*.json
+client_secret*.json
+*credentials*.json
+*.pem
+*.key
+exports/
+logs/
+.DS_Store

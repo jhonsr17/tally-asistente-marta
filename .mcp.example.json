@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "tally-ventas": {
+      "command": "python",
+      "args": ["tools/server.py"]
+    }
+  }
+}
