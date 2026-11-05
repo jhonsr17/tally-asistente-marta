@@ -1,47 +1,41 @@
 # Asistente comercial de Marta
 
-Paquete local para Claude Code que consulta el contexto de ventas US → MX en Tally 360. Estado: prototipo de lectura; la conexión a producción requiere acceso individual aprobado.
+Instrucciones para trabajar con ventas US → MX desde Claude Code, conectado al MCP nativo de Tally 360 con la cuenta personal de Marta.
 
-## Instalación acompañada
+## Instalación
 
-1. Aceptar la invitación al repositorio privado https://github.com/jhonsr17/tally-asistente-marta y clonarlo. Abrir Claude Code dentro de la carpeta clonada.
-2. Instalar Python 3.11 o superior. Desde la raíz del clon:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-3. Alan/Dilson debe proporcionar el mecanismo de autenticación aprobado para Marta. No compartir claves de servicio ni tokens por chat. Todavía no se ha emitido la credencial restringida del agente.
-4. Ejecutar el configurador, con la URL HTTPS del backend (sin /api al final) y el token individual autorizado:
+1. Aceptar la invitación a https://github.com/jhonsr17/tally-asistente-marta y clonar el repositorio. Si ya está clonado, actualizarlo con `git pull`.
+2. Abrir Claude Code dentro de la carpeta del repositorio.
+3. En la terminal de esa computadora, registrar el servidor:
 
 ```powershell
-.\.venv\Scripts\python.exe tools\configure.py
+claude mcp add --scope user --transport http tally-360 https://web-production-8140b.up.railway.app/api/mcp
 ```
 
-Guarda la conexión fuera del repo: `%APPDATA%/TallyMarta/connection.json` en Windows. El token se guarda como archivo local en el perfil, no como almacén cifrado: usar únicamente credenciales individuales aprobadas; no sincronizarlo ni compartirlo. El servidor también admite `TALLY_360_URL` y `TALLY_360_TOKEN` como variables de entorno.
+4. Dentro de Claude Code, escribir `/mcp`, seleccionar `tally-360` y **Authenticate**. Iniciar sesión en la página del 360 con la cuenta de Marta y completar la verificación que solicite.
+5. Consultar `/mcp` para comprobar el estado y las herramientas disponibles.
 
-5. Copiar `.mcp.example.json` a `.mcp.json` (ignorado por Git). Cambiar `command` por la ruta absoluta a `.venv/Scripts/python.exe` y `args[0]` por la ruta absoluta a `tools/server.py` del clon. No añadir secretos al JSON.
-6. Abrir Claude Code, revisar la configuración MCP y habilitar el servidor local. Sin conexión configurada, sus herramientas devuelven un error explicativo.
+Esta ruta no requiere Python ni copiar tokens. La sesión se guarda mediante el cliente, fuera del repositorio. No compartir contraseñas, tokens ni llaves de servicio.
 
-## Primera prueba
+Alternativa de configuración por proyecto: copiar `.mcp.example.json` a `.mcp.json` y autenticar desde `/mcp`. Elegir una sola forma de registrar `tally-360` para evitar duplicados. Si antes se configuró el servidor local `tally-ventas`, deshabilitarlo en la configuración donde se agregó; su token no sirve para el MCP nativo.
 
-Pedir: «Busca una empresa en US → MX, lee sus hilos relevantes y dime qué pasó, qué falta y cuál es el siguiente paso, con fuentes y fechas». Validar con Marta contra el 360.
+## Primera prueba con Marta
 
-Esta versión expone `estado_conexion`, `listar_us_mx`, `consultar_lead`, `listar_hilos` y `leer_hilo`. No guarda borradores en Gmail, no envía mensajes, no mueve etapas y no accede directamente a la base.
+- Pedir «Busca una empresa y muéstrame su ficha con fuentes y fechas». Confirmar su identidad en la conexión.
+- Buscar un lead US → MX y comprobar etapa y responsable contra la interfaz del 360.
+- Para probar escritura, Marta debe pedir una nota concreta en ese lead. Verificar en el 360 el contenido y el autor. Consultar después la ficha para confirmar el resultado.
+- Si no aparece una herramienta o hay un rechazo de permisos, registrar el mensaje y revisarlo con Alan/Dilson. No usar credenciales de otra persona.
 
-Las instrucciones están en `CLAUDE.md`. El contexto general vive en `docs/`. El repo no incluye la carpeta original de tokens, archivos de clientes, dump de correo, video ni historia de Pipedrive.
+## Capacidades y límites
 
-## Verificación local
+El código y las guías actuales del backend contemplan búsqueda, contexto de empresa, ficha de leads, pendientes, notas y actualización de leads. Las herramientas expuestas dependen del rol y la versión desplegada. Esta publicación no verifica la conexión de Marta en producción.
 
-```powershell
-python -m unittest discover -s tests -v
-```
+La conexión hereda los permisos humanos de Marta. El límite exclusivo US → MX del agente aún requiere validación e implementación en servidor: las instrucciones del repositorio acotan su trabajo, pero no reducen los permisos técnicos de su cuenta.
 
-Las pruebas usan respuestas simuladas y no requieren producción. Falta validación de extremo a extremo con la autenticación aprobada y prueba desde la computadora de Marta.
+Gmail crudo, envío de correos, lectura directa de transcripciones y campañas de Instantly requieren herramientas y permisos adicionales. No quedan activados al clonar o autenticar este MCP. Ver `docs/permisos-y-acciones.md`.
 
-## Accesos pendientes
+## Adaptador local anterior
 
-Clonar este repositorio entrega instrucciones y herramientas, pero no concede acceso al 360, Gmail, Instantly ni a la base de datos. Alan/Dilson debe habilitar el acceso individual al backend antes de configurar la conexión.
+`tools/`, `requirements.txt` y `tests/` conservan el prototipo de consulta REST anterior como referencia. No se utiliza en la instalación recomendada. No configurar un token MCP nativo en `tools/configure.py`: ese token solo es válido en `/api/mcp`, mientras el prototipo llama otras rutas.
 
-La versión publicada consulta US → MX y sus hilos. La edición del pipeline, las transcripciones directas y la operación de campañas siguen pendientes de implementación y validación.
+Sus pruebas se ejecutan con `python -m unittest discover -s tests -v`; no validan el servidor remoto, OAuth ni los permisos reales de Marta.

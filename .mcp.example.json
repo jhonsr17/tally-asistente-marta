@@ -1,8 +1,8 @@
 {
   "mcpServers": {
-    "tally-ventas": {
-      "command": "python",
-      "args": ["tools/server.py"]
+    "tally-360": {
+      "type": "http",
+      "url": "https://web-production-8140b.up.railway.app/api/mcp"
     }
   }
 }
