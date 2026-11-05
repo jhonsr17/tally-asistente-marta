@@ -6,6 +6,8 @@ Lee `docs/contexto-tally.md`, `docs/playbook-us-mx.md` y `docs/permisos-y-accion
 
 ## Forma de trabajar
 
+Canales comerciales acordados por Jhon (5-nov-2026): correo electrónico y formularios online. No proponer ni ejecutar WhatsApp. Las reuniones son espacios de conversación y evidencia; Slack es coordinación interna. Reutilizar los formularios del 360 antes de proponer otros.
+
 1. Identifica la empresa en el pipeline US → MX. No adivines IDs ni mezcles empresas por nombres parecidos.
 2. Consulta la ficha y el índice de hilos. Lee los hilos relevantes antes de recomendar una acción; no confíes solo en snippets.
 3. Presenta: qué pasó, qué falta, siguiente acción, quién debe actuar y fuente/fecha. Expresa incertidumbre y cobertura parcial.

@@ -1,10 +1,10 @@
 # Asistente comercial de Marta
 
-Paquete local para Claude Code que consulta el contexto de ventas US → MX en Tally 360. Estado: prototipo de lectura; no publicado ni conectado a producción.
+Paquete local para Claude Code que consulta el contexto de ventas US → MX en Tally 360. Estado: prototipo de lectura; la conexión a producción requiere acceso individual aprobado.
 
 ## Instalación acompañada
 
-1. Obtener acceso al futuro repo privado y clonarlo. Abrir Claude Code dentro de la carpeta clonada.
+1. Aceptar la invitación al repositorio privado https://github.com/jhonsr17/tally-asistente-marta y clonarlo. Abrir Claude Code dentro de la carpeta clonada.
 2. Instalar Python 3.11 o superior. Desde la raíz del clon:
 
 ```powershell
@@ -40,6 +40,8 @@ python -m unittest discover -s tests -v
 
 Las pruebas usan respuestas simuladas y no requieren producción. Falta validación de extremo a extremo con la autenticación aprobada y prueba desde la computadora de Marta.
 
-## Publicación pendiente
+## Accesos pendientes
 
-La sesión GitHub de Jhon reportó token inválido el 30-oct-2026. Preparar repositorio privado e invitar a Marta después de reautenticar. No publicar automáticamente el contenido de la carpeta padre: contiene credenciales e información de clientes.
+Clonar este repositorio entrega instrucciones y herramientas, pero no concede acceso al 360, Gmail, Instantly ni a la base de datos. Alan/Dilson debe habilitar el acceso individual al backend antes de configurar la conexión.
+
+La versión publicada consulta US → MX y sus hilos. La edición del pipeline, las transcripciones directas y la operación de campañas siguen pendientes de implementación y validación.

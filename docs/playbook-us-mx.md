@@ -2,6 +2,8 @@
 
 Objetivo: ninguna oportunidad activa sin un siguiente paso claro y verificable.
 
+Canales: correo electrónico y formularios online del 360. WhatsApp queda fuera. El asistente prepara contexto y borradores; las reuniones aportan evidencia y Slack sirve para coordinación interna.
+
 ## Lectura de una oportunidad
 
 - Encaje: productos, mercado objetivo y servicio requerido.
